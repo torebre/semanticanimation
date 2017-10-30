@@ -1,0 +1,4 @@
+rootProject.name = 'semanticAnimation'
+include 'stateHandling'
+include 'visualization'
+include 'ontology'
