@@ -1,11 +1,8 @@
 package com.kjipo.svg
 
 
-import javafx.beans.value.ObservableValue
-import javafx.concurrent.Worker
 import javafx.scene.layout.Region
 import javafx.scene.web.WebView
-import netscape.javascript.JSObject
 import org.slf4j.LoggerFactory
 import tornadofx.*
 import java.io.IOException
