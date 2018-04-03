@@ -65,8 +65,8 @@ fun writeEquation() {
 
 fun main(args: Array<String>) {
 //    moveCircle()
-    moveCircle2()
-//    writeEquation()
+//    moveCircle2()
+    writeEquation()
 
 
 }
