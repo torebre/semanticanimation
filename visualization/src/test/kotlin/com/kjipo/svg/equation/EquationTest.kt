@@ -66,7 +66,7 @@ fun equationTest() {
         Thread.sleep(500)
     FX.runAndWait { svgController.moveEquation() }
     Thread.sleep(500)
-    FX.runAndWait { svgController.drawTestPath() }
+//    FX.runAndWait { svgController.drawTestPath() }
 
 
 //    FX.runAndWait { svgController.move(circle1, 150, 150) }

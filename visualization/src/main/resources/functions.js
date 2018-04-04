@@ -20,8 +20,8 @@ function move(xNew, yNew, circleId) {
 
 
 function moveEquation(newPath, id) {
-    const equation = Snap.select("#test");
-    // const equation = Snap.select("#500");
+    // const equation = Snap.select("#test");
+    const equation = Snap.select("#" +id);
 
     equation.animate(
         {
@@ -41,7 +41,7 @@ function createPath(path, id) {
     // s.attr({viewBox: "0 -941.2 1343 1117.2"});
     const snapPath = snap.path(path);
     snapPath.attr({
-        id: "test"
+        id: id
     })
 
 }
