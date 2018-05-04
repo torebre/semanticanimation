@@ -31,14 +31,6 @@ class SvgVisualization : View("Visualization") {
 }
 
 
-class JavaBridge {
-
-    fun log(text: String) {
-        println(text)
-    }
-
-}
-
 class WebViewTest : Region() {
     val browser = WebView()
     val webEngine = browser.engine
