@@ -13,8 +13,8 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.9
+targetCompatibility = 1.9
 
 repositories {
     mavenCentral()
@@ -28,3 +28,18 @@ dependencies {
     compile "no.tornado:tornadofx:${tornadoVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+
+
+//compileJava {
+//    options.compilerArgs += ["--add-modules", "java.xml"]
+//}
+//
+//
+//compileTestJava {
+//    options.compilerArgs += ["--add-modules", "java.xml"]
+//}
+//
+//test {
+//    jvmArgs += ["--add-modules", "java.xml"]
+//}

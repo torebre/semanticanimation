@@ -8,7 +8,7 @@ task wrapper(type: Wrapper) {
 
 
 ext {
-    kotlin_version = "1.2.20"
+    kotlin_version = "1.2.31"
 }
 
 ext.tornadoVersion = "1.7.14"

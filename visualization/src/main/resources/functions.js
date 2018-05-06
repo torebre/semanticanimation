@@ -21,6 +21,9 @@ function move(xNew, yNew, circleId) {
 
 function moveEquation(newPath, id) {
     // const equation = Snap.select("#test");
+
+    // const snap = Snap("#svg_equation");
+
     const equation = Snap.select("#" +id);
 
     equation.animate(
