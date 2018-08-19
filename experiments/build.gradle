@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile project(":math")
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graal-sdk.jar')
+    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graaljs-scriptengine.jar')
+}

@@ -2,22 +2,21 @@ plugins {
     id 'java'
 }
 
-group 'com.kjipo'
-version '0.1.0-SNAPSHOT'
-
-sourceCompatibility = 1.9
 
 compileJava {
-    options.compilerArgs += ["--add-modules", "java.xml.bind"]
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+//    options.compilerArgs += ["--add-modules", "java.xml.bind"]
 }
 
 
 compileTestJava {
-    options.compilerArgs += ["--add-modules", "java.xml.bind"]
+//    options.compilerArgs += ["--add-modules", "java.xml.bind"]
 }
 
 test {
-    jvmArgs += ["--add-modules", "java.xml.bind"]
+//    jvmArgs += ["--add-modules", "java.xml.bind"]
 }
 
 repositories {
