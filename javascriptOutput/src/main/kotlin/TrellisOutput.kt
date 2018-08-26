@@ -1,10 +1,6 @@
-import Snap.AnimateProperties
-import Snap.`T$0`
-import Snap.`T$1`
 import org.w3c.dom.Element
 import org.w3c.dom.parsing.DOMParser
 import kotlin.browser.document
-import kotlin.browser.window
 
 
 class TrellisOutput {
@@ -14,58 +10,15 @@ class TrellisOutput {
 
         val svgElement = document.getElementById("trellis")
 
-        println("Test23: " + svgElement)
-
         svgElement?.let {
-
-            println("Test24")
             setupSvg(it)
 
             val equation = Snap.select("#MJMAIN-32")
-
-//            equation.animate("{d: \"M500\"}", 1000)
-//            equation.animate("{stroke-width: 50}", 1000)
-
-
-//            @Suppress("NOTHING_TO_INLINE")
-//            inline operator fun `T$1`.get(attr: String): dynamic /* String | Number | Boolean | BBox | Any */ = asDynamic()[attr]
-//
-//            @Suppress("NOTHING_TO_INLINE")
-//            inline operator fun `T$1`.set(attr: String, value: String) {
-//                asDynamic()[attr] = value
-//            }
-
-//            equation.animate(object : `T$0` {
-//                override fun get(attr: String): dynamic {
-//
-//                    println("Test30")
-//
-//                    return """
-//                        {
-//                       d: "M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z"
-//                        }
-//                    """.trimIndent()
-//                }
-//
-//                override fun set(attr: String, value: String) {
-//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//
-//                }
-//            }
-//                    , 1000)
-
-//            val animateProperties = object: AnimateProperties {
-//                override var d = "M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z"
-//            }
-//            animateProperties.d = "M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z"
-
             val animateProperties: dynamic = Any()
             animateProperties.d = "M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z"
 
             equation.animate(animateProperties, 1000)
-
         }
-
 
     }
 
@@ -104,13 +57,7 @@ class TrellisOutput {
     </div>
 """, "application/xml")
 
-        println("Test25: $svgData")
-
         svgData.getElementById("svg_test")?.let {
-
-
-            println("Test26: $it")
-
             topElement.appendChild(it)
         }
 

@@ -28,7 +28,11 @@ dependencies {
     compile "no.tornado:tornadofx:${tornadoVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-//    compile group: 'org.openjfx', name: 'javafx.base', version: '11.0.0-ea1', ext: 'pom'
+//    compile group: 'org.openjfx', name: 'javafx-base', version: '11-ea+19'
+//    compile group: 'org.openjfx', name: 'javafx-graphics', version: '11-ea+19'
+//
+    compile files('/home/student/.sdkman/candidates/java/8u161-oracle/jre/lib/ext/jfxrt.jar')
+
 }
 
 

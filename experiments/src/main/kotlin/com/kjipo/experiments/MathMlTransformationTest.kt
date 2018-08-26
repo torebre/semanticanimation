@@ -2,15 +2,22 @@ package com.kjipo.experiments
 
 import com.kjipo.mathml3.*
 import java.io.StringWriter
-import javax.xml.bind.JAXB
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
+import javax.xml.bind.JAXBContext
+import javax.xml.bind.Marshaller
 
 
-private object MatrixExperiment {
+private object MathMlTransformationTest {
 
 
-    fun createMatrix() {
+    fun transformTest() {
+        val math = Math()
+
         val mrow = Mrow()
-        mrow.id = "row1"
+        math.children.add(mrow)
 
         val moStart = Mo()
         moStart.setvalue("(")
@@ -66,9 +73,30 @@ private object MatrixExperiment {
 
 
         val stringWriter = StringWriter()
-        JAXB.marshal(mrow, stringWriter)
 
-        println("Output: $stringWriter")
+        val context = JAXBContext.newInstance(Math::class.java)
+
+        val marshaller = context.createMarshaller()
+//        marshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, "")
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false)
+
+        marshaller.marshal(math, stringWriter)
+
+        Files.write(Paths.get("matrix_data.xml"), stringWriter.toString().toByteArray(StandardCharsets.UTF_8), StandardOpenOption.CREATE)
+
+        val transformer = MathMlSvgTransformerImpl()
+
+        val input = String(Files.readAllBytes(Paths.get("matrix_data.xml")), StandardCharsets.UTF_8)
+
+        println("Input: $input")
+
+        Files.write(Paths.get("matrix_test.svg"),
+                transformer.tranformToSvg(input).toByteArray())
+//        Files.write(Paths.get("matrix_test.svg"), transformer.tranformToSvg(stringWriter.toString()).toByteArray(StandardCharsets.UTF_8))
+
+
+
+//        println("Output: $stringWriter")
 
 
     }
@@ -76,8 +104,7 @@ private object MatrixExperiment {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        createMatrix()
-
+        transformTest()
 
     }
 
