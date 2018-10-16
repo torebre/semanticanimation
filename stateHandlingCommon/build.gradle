@@ -1,0 +1,28 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+//    dependencies {
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//    }
+}
+
+
+apply plugin: 'kotlin-platform-common'
+
+group 'com.kjipo'
+version '0.1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-common"
+    testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common"
+    testCompile "org.jetbrains.kotlin:kotlin-test-common"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
