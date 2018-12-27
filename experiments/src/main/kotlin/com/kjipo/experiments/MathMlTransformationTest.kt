@@ -95,16 +95,60 @@ private object MathMlTransformationTest {
 //        Files.write(Paths.get("matrix_test.svg"), transformer.tranformToSvg(stringWriter.toString()).toByteArray(StandardCharsets.UTF_8))
 
 
-
 //        println("Output: $stringWriter")
 
 
     }
 
 
+    private fun creationTest(matrix: Matrix<Int>, idPrefix: String, fileName: String) {
+        val stringWriter = StringWriter()
+
+        val context = JAXBContext.newInstance(Math::class.java)
+
+        val marshaller = context.createMarshaller()
+//        marshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, "")
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false)
+
+        val math = MatrixCreator.createMatrix(matrix, idPrefix)
+        marshaller.marshal(math, stringWriter)
+
+        Files.write(Paths.get(fileName +".xml"), stringWriter.toString().toByteArray(StandardCharsets.UTF_8), StandardOpenOption.CREATE)
+
+        val transformer = MathMlSvgTransformerImpl()
+
+        val input = String(Files.readAllBytes(Paths.get(fileName +".xml")), StandardCharsets.UTF_8)
+
+//        println("Input: $input")
+
+        Files.write(Paths.get(fileName +".svg"),
+                transformer.tranformToSvg(input).toByteArray())
+    }
+
+
     @JvmStatic
     fun main(args: Array<String>) {
-        transformTest()
+//        transformTest()
+
+        val matrix = Matrix(5, 5, {row, column ->
+            if(row == column) {
+                1
+            }
+            else {
+                0
+            }
+        })
+
+        creationTest(matrix, "test", "matrix_test")
+
+        val matrix2 = Matrix(5, 1) { row, column ->
+            when (row) {
+                0, 2 -> 1
+                else -> 0
+            }
+        }
+
+        creationTest(matrix2, "test2", "matrix_test2")
 
     }
 
