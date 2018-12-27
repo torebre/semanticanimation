@@ -29,7 +29,8 @@ apply plugin: 'kotlin'
 sourceCompatibility = 1.8
 
 compileJava.options.fork = true
-compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
+//compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
+compileJava.options.forkOptions.executable = '/home/student/.sdkman/candidates/java/1.0.0-rc7-graal/'
 
 repositories {
     mavenCentral()

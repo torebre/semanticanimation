@@ -12,6 +12,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graal-sdk.jar')
-    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graaljs-scriptengine.jar')
+//    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graal-sdk.jar')
+//    compile files('/home/student/Downloads/graalvm-ce-1.0.0-rc5/jre/lib/boot/graaljs-scriptengine.jar')
+
+    compile files('/home/student/.sdkman/candidates/java/1.0.0-rc7-graal/jre/lib/boot/graal-sdk.jar')
+    compile files('/home/student/.sdkman/candidates/java/1.0.0-rc7-graal/jre/lib/boot/graaljs-scriptengine.jar')
 }

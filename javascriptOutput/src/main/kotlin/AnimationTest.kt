@@ -14,10 +14,10 @@ class AnimationTest {
 
 
     fun drawCircle(snap: Paper) {
-
-
-        snap.circle(100, 100, 20)
-
+        val circle = snap.circle(100, 200, 20)
+        circle.node.onclick = {
+            circle.attr("fill", "red")
+        }
 
     }
 
