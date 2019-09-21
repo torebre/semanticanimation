@@ -7,14 +7,6 @@ import org.w3c.files.File
 import kotlin.browser.document
 
 
-//object MatrixWebAnimation {
-//
-//
-//
-//
-//
-//}
-
 class MatrixWebAnimation(svgElementId: String = "matrix") {
     private val svgElement: Element
 
@@ -49,6 +41,30 @@ class MatrixWebAnimation(svgElementId: String = "matrix") {
 
             }
 
+        }
+
+
+    }
+
+
+    fun animateMatrix() {
+//        val svgElement = document.getElementById("trellis")
+
+        svgElement.let {
+//            setupSvg(it)
+
+
+            val equation = Snap.select("#mn_test")
+
+
+
+            println("Equation: $equation")
+
+            val animateProperties: dynamic = Any()
+//            animateProperties.d = "M94.2,265.7L82,203.4c43.3-15.6,83.8-29.2,137.1-20.2c61.5-27.6,126.1-56.9,202.6 46.1c18.7,18.9,21.5,39.8,12.2,62.3C322.7,231.9,208.2,247.6,94.2,265.7z"
+            animateProperties.transform = "t1000, 0"
+
+            equation.animate(animateProperties, 1000)
         }
 
 
@@ -119,6 +135,7 @@ fun main() {
 
     val matrixWebAnimation = MatrixWebAnimation()
     matrixWebAnimation.createMatrix()
+    matrixWebAnimation.animateMatrix()
 
 
 
