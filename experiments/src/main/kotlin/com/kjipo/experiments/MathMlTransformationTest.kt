@@ -10,10 +10,9 @@ import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller
 
 
-private object MathMlTransformationTest {
+internal object MathMlTransformationTest {
 
-
-    fun transformTest() {
+    fun createTestColumnMatrix(): Math {
         val math = Math()
 
         val mrow = Mrow()
@@ -71,9 +70,12 @@ private object MathMlTransformationTest {
         moEnd.setvalue(")")
         mrow.elements.add(moEnd)
 
+        return math
+    }
 
+    fun transformTest() {
+        val math = createTestColumnMatrix()
         val stringWriter = StringWriter()
-
         val context = JAXBContext.newInstance(Math::class.java)
 
         val marshaller = context.createMarshaller()
@@ -130,14 +132,14 @@ private object MathMlTransformationTest {
     fun main(args: Array<String>) {
 //        transformTest()
 
-        val matrix = Matrix(5, 5, {row, column ->
+        val matrix = Matrix(5, 5) { row, column ->
             if(row == column) {
                 1
             }
             else {
                 0
             }
-        })
+        }
 
         creationTest(matrix, "test", "matrix_test")
 

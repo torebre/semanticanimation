@@ -3,7 +3,6 @@ package com.kjipo.experiments
 import svg.Svg
 import java.nio.file.Files
 import java.nio.file.Paths
-import javax.xml.bind.JAXB
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.ValidationEvent
 import javax.xml.bind.ValidationEventHandler
