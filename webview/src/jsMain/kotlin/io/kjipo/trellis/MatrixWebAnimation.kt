@@ -1,10 +1,8 @@
 package io.kjipo.trellis
 
-import Snap.parse
+import kotlinx.browser.document
 import org.w3c.dom.Element
 import org.w3c.dom.parsing.DOMParser
-import org.w3c.files.File
-import kotlin.browser.document
 
 
 class MatrixWebAnimation(svgElementId: String = "matrix") {

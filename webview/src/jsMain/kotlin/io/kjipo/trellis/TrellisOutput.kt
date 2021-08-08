@@ -1,11 +1,6 @@
-import org.w3c.dom.Element
-import org.w3c.dom.css.CSSStyleDeclaration
+import kotlinx.browser.document
 import org.w3c.dom.events.KeyboardEvent
-import org.w3c.dom.parsing.DOMParser
 import org.w3c.dom.svg.SVGElement
-import kotlin.browser.document
-
-
 
 
 class TrellisOutput(svgElementId: String = "trellis") {

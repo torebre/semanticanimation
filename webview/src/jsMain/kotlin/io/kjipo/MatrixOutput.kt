@@ -73,13 +73,13 @@ object MatrixOutput {
     fun drawMatrix() {
         val svgRoot = document.createElement("div")
         document.rootElement?.appendChild(svgRoot)
-
         val fragment = parse(svgMatrix)
-
         val snap = Snap("#matrix")
-
         snap.append(fragment.unsafeCast<Element>())
+    }
 
+
+    fun animateTest() {
         val pathSelect = Snap.select("#E1-MJSZ4-23A4")
         val animateProperties: dynamic = Any()
         animateProperties.d = "M0 1070V1154H347V-645H263V1070H0Z"
