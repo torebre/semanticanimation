@@ -1,42 +1,51 @@
 group 'com.kjipo'
 version '0.1.0-SNAPSHOT'
 
-//task wrapper(type: Wrapper) {
-//    gradleVersion = '2.13'
-//    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-//}
-
-
-ext {
-    kotlin_version = "1.2.51"
-    tornadoVersion = "1.7.14"
-}
 
 
 buildscript {
-    ext.kotlin_version = "1.2.51"
+    ext.kotlinVersion = "1.4.21"
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+
+ext {
+//    nodeVersion = '8.11.1'
+    kotlinLogging = '2.0.2'
 }
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
-sourceCompatibility = 1.8
-
 compileJava.options.fork = true
-//compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
-compileJava.options.forkOptions.executable = '/home/student/.sdkman/candidates/java/1.0.0-rc7-graal/'
+compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+subprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        // TODO It should not be necessary to define this at this location
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+
 }

@@ -54,6 +54,8 @@ object GvtTest {
             }
             println("Graphics node: ${gvtNode}")
 
+            println("Bounds: ${gvtNode.bounds}")
+
             val element = ctx.getElement(gvtNode)
 
             println("Element: $element")

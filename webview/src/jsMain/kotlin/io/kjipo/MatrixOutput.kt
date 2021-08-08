@@ -1,8 +1,11 @@
+package io.kjipo
+
+import Snap
 import Snap.Element
 import Snap.parse
-import kotlin.browser.document
+import kotlinx.browser.document
 
-class MatrixOutput {
+object MatrixOutput {
     private val svgMatrix = """
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.015ex" height="16.176ex" style="vertical-align: -7.505ex;" viewBox="0 -3733.5 2159 6964.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
 <title id="MathJax-SVG-1-Title">Equation</title>
@@ -73,7 +76,7 @@ class MatrixOutput {
 
         val fragment = parse(svgMatrix)
 
-        val snap = Snap("#trellis")
+        val snap = Snap("#matrix")
 
         snap.append(fragment.unsafeCast<Element>())
 

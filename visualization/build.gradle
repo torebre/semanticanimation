@@ -25,14 +25,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
     compile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    compile "no.tornado:tornadofx:${tornadoVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.11'
-
-//    compile group: 'org.openjfx', name: 'javafx-base', version: '11-ea+19'
-//    compile group: 'org.openjfx', name: 'javafx-graphics', version: '11-ea+19'
-//
-    compile files('/home/student/.sdkman/candidates/java/8u161-oracle/jre/lib/ext/jfxrt.jar')
-
 }
 
 

@@ -1,8 +1,6 @@
 package com.kjipo.experiments
 
 import com.kjipo.mathml3.Math
-import com.sun.xml.internal.fastinfoset.util.StringArray
-import svg.Svg
 import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files

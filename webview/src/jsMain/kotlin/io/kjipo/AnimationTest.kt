@@ -1,3 +1,6 @@
+package io.kjipo
+
+import Snap
 import Snap.Paper
 
 
