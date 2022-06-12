@@ -1,16 +1,12 @@
-group 'com.kjipo'
-version '0.1.0-SNAPSHOT'
-
-
+allprojects {
+    group 'com.kjipo'
+    version '0.1.0-SNAPSHOT'
+}
 
 buildscript {
-    ext.kotlinVersion = "1.4.21"
-    repositories {
-        mavenCentral()
-    }
+    ext.kotlinVersion = "1.6.20"
 
     repositories {
-        jcenter()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -22,30 +18,28 @@ buildscript {
 
 ext {
 //    nodeVersion = '8.11.1'
+    kotlinVersion = '1.6.20'
     kotlinLogging = '2.0.2'
+
+    libraries = [
+            junit                         : "junit:junit:4.12",
+            kotlin_stdlib                 : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotlin_stdlib_common          : "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion",
+            kotlin_stdlib_js              : "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion",
+            kotlin_test_annotations_common: "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion",
+            kotlin_test_common            : "org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion",
+            kotlin_test_js                : "org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion",
+            kotlin_test_junit             : "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
+    ]
 }
 
-apply plugin: 'java'
-apply plugin: 'kotlin'
-
-compileJava.options.fork = true
-compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
+//compileJava.options.fork = true
+//compileJava.options.forkOptions.executable = '/home/student/Downloads/graalvm-ce-1.0.0-rc5'
 
 subprojects {
     repositories {
-        jcenter()
         mavenCentral()
         // TODO It should not be necessary to define this at this location
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
-
 }

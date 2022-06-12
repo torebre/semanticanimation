@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-common"
-    testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common"
-    testCompile "org.jetbrains.kotlin:kotlin-test-common"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation libraries.kotlin_stdlib
+    testImplementation "org.jetbrains.kotlin:kotlin-test-annotations-common"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-common"
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
