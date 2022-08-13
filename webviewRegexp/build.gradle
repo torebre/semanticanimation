@@ -7,13 +7,10 @@ repositories {
 }
 
 dependencies {
+    implementation project(":stateHandling")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+    implementation "io.github.microutils:kotlin-logging:$kotlinLogging"
     testImplementation "org.jetbrains.kotlin:kotlin-test-js"
-}
-
-// This is a hack to avoid an exception
-task prepareKotlinBuildScriptModel {
-
 }
 
 kotlin {

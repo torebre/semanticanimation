@@ -4,7 +4,7 @@ allprojects {
 }
 
 buildscript {
-    ext.kotlinVersion = "1.6.20"
+    ext.kotlinVersion = "1.7.10"
 
     repositories {
         mavenCentral()
@@ -18,7 +18,7 @@ buildscript {
 
 ext {
 //    nodeVersion = '8.11.1'
-    kotlinVersion = '1.6.20'
+    kotlinVersion = '1.7.10'
     kotlinLogging = '2.0.2'
 
     libraries = [

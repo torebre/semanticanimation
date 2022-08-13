@@ -49,12 +49,14 @@ class RegularExpression {
                     nalt = 0
                     natom = 0
                 }
+
                 '|' -> {
                     while (--natom > 0) {
                         destination += '.'
                     }
                     ++nalt
                 }
+
                 ')' -> {
                     while (--natom > 0) {
                         destination += '.'
@@ -69,9 +71,11 @@ class RegularExpression {
                     }
                     ++natom
                 }
+
                 '*', '+', '?' -> {
                     destination += character
                 }
+
                 else -> {
                     if (natom > 1) {
                         --natom
@@ -112,6 +116,7 @@ class RegularExpression {
                     }
                     stack.add(Frag(e1.start, e2.out))
                 }
+
                 '|' -> {
                     val e2 = stack.removeLast()
                     val e1 = stack.removeLast()
@@ -119,11 +124,13 @@ class RegularExpression {
                     val tempList = e1.out.toMutableList().also { it.addAll(e2.out) }
                     stack.add(Frag(state, tempList))
                 }
+
                 '?' -> {
                     val e = stack.removeLast()
                     val state = State(StateValue.Split.value, e.start, null)
                     stack.add(Frag(state, e.out.toMutableList().also { it.add(StateHolder(state, false)) }))
                 }
+
                 '*' -> {
                     val e = stack.removeLast()
                     val state = State(StateValue.Split.value, e.start, null)
@@ -136,6 +143,7 @@ class RegularExpression {
                     }
                     stack.add(Frag(state, mutableListOf(StateHolder(state, false))))
                 }
+
                 '+' -> {
                     val eElement = stack.removeLast()
                     val state = State(StateValue.Split.value, eElement.start, null)
@@ -149,6 +157,7 @@ class RegularExpression {
                     }
                     stack.add(Frag(eElement.start, mutableListOf(StateHolder(state, false))))
                 }
+
                 else -> {
                     val state = State(character.code, null, null)
                     stack.add(Frag(state, mutableListOf(StateHolder(state, true))))
@@ -183,15 +192,7 @@ class RegularExpression {
         return isMatch(clist)
     }
 
-    private fun isMatch(clist: List<State>): Boolean {
-        for (state in clist) {
-            if (state.c == StateValue.Match.value) {
-                return true
-            }
-        }
-        return false
-    }
-
+    private fun isMatch(clist: List<State>) = clist.firstOrNull { it.c == StateValue.Match.value } != null
 
     private fun addState(clist: MutableList<State>, state: State?) {
         if (state == null || state.lastList == listId) {
