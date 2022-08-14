@@ -31,6 +31,37 @@ class RegularExpression {
     private val splitState = State(StateValue.Split.value)
 
 
+    val actionSequence = mutableListOf<RegExpAction>()
+
+
+    private interface WrappedStack {
+        fun addFragment(fragment: Frag)
+        fun popFragment(): Frag
+    }
+
+    private fun getWrappedStack(): WrappedStack {
+        return object : WrappedStack {
+            val stack = mutableListOf<Frag>()
+
+            override fun addFragment(fragment: Frag) {
+
+                stack.add(fragment)
+                actionSequence.add(StackAdd(fragment))
+
+
+            }
+
+            override fun popFragment(): Frag {
+                return stack.removeLast().also {
+                    actionSequence.add(StackRemove(it))
+                }
+            }
+
+        }
+
+    }
+
+
     fun regularExpressionToPostfixNotation(regularExpression: String): String {
         val parens = mutableListOf<Paren>()
         var nalt = 0
@@ -99,13 +130,13 @@ class RegularExpression {
 
 
     fun postfixToNfa(postfix: String): State {
-        val stack = mutableListOf<Frag>()
+        val stack = getWrappedStack()
 
         for (character in postfix) {
             when (character) {
                 '.' -> {
-                    val e2 = stack.removeLast()
-                    val e1 = stack.removeLast()
+                    val e2 = stack.popFragment()
+                    val e1 = stack.popFragment()
 
                     e1.out.forEach { element ->
                         if (element.isOut) {
@@ -114,25 +145,25 @@ class RegularExpression {
                             element.state.out1 = e2.start
                         }
                     }
-                    stack.add(Frag(e1.start, e2.out))
+                    stack.addFragment(Frag(e1.start, e2.out))
                 }
 
                 '|' -> {
-                    val e2 = stack.removeLast()
-                    val e1 = stack.removeLast()
+                    val e2 = stack.popFragment()
+                    val e1 = stack.popFragment()
                     val state = State(StateValue.Split.value, e1.start, e2.start)
                     val tempList = e1.out.toMutableList().also { it.addAll(e2.out) }
-                    stack.add(Frag(state, tempList))
+                    stack.addFragment(Frag(state, tempList))
                 }
 
                 '?' -> {
-                    val e = stack.removeLast()
+                    val e = stack.popFragment()
                     val state = State(StateValue.Split.value, e.start, null)
-                    stack.add(Frag(state, e.out.toMutableList().also { it.add(StateHolder(state, false)) }))
+                    stack.addFragment(Frag(state, e.out.toMutableList().also { it.add(StateHolder(state, false)) }))
                 }
 
                 '*' -> {
-                    val e = stack.removeLast()
+                    val e = stack.popFragment()
                     val state = State(StateValue.Split.value, e.start, null)
                     e.out.forEach { stateHolder ->
                         if (stateHolder.isOut) {
@@ -141,11 +172,11 @@ class RegularExpression {
                             stateHolder.state.out1 = state
                         }
                     }
-                    stack.add(Frag(state, mutableListOf(StateHolder(state, false))))
+                    stack.addFragment(Frag(state, mutableListOf(StateHolder(state, false))))
                 }
 
                 '+' -> {
-                    val eElement = stack.removeLast()
+                    val eElement = stack.popFragment()
                     val state = State(StateValue.Split.value, eElement.start, null)
 
                     eElement.out.forEach {
@@ -155,17 +186,17 @@ class RegularExpression {
                             it.state.out1 = state
                         }
                     }
-                    stack.add(Frag(eElement.start, mutableListOf(StateHolder(state, false))))
+                    stack.addFragment(Frag(eElement.start, mutableListOf(StateHolder(state, false))))
                 }
 
                 else -> {
                     val state = State(character.code, null, null)
-                    stack.add(Frag(state, mutableListOf(StateHolder(state, true))))
+                    stack.addFragment(Frag(state, mutableListOf(StateHolder(state, true))))
                 }
             }
         }
 
-        return stack.removeLast().let { fragment ->
+        return stack.popFragment().let { fragment ->
             fragment.out.forEach {
                 if (it.isOut) {
                     it.state.out = matchState
