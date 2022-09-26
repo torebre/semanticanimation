@@ -6,3 +6,4 @@ class StackAdd(val fragment: Frag) : RegExpAction()
 
 class StackRemove(val fragment: Frag): RegExpAction()
 
+class HandleCharacterInPostfixNotation(val character: Char): RegExpAction()
