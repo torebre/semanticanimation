@@ -32,6 +32,9 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
+                implementation "io.github.microutils:kotlin-logging-jvm:$kotlinLogging"
+                // Need to depend on an implementation. This will give logging to standard out
+                implementation "org.slf4j:slf4j-simple:2.0.3"
             }
         }
         jvmTest {
