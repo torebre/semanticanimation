@@ -19,7 +19,7 @@ buildscript {
 ext {
 //    nodeVersion = '8.11.1'
     kotlinVersion = '1.7.10'
-    kotlinLogging = '2.0.2'
+    kotlinLogging = '3.0.0'
 
     libraries = [
             junit                         : "junit:junit:4.12",
