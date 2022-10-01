@@ -1,13 +1,20 @@
 package com.kjipo.regex
 
+import mu.KotlinLogging
+
 data class Paren(val nalt: Int, val natom: Int)
 
 
 class StateHolder(var state: State, val isOut: Boolean)
+
 data class State(
     var c: Int, var out: State? = null,
     var out1: State? = null, var lastList: Int = 0
-)
+) {
+    override fun toString(): String {
+        return "State(c=$c, out=${out?.c}, out1=${out1?.c}, lastList=$lastList)"
+    }
+}
 
 data class Frag(val start: State, val out: MutableList<StateHolder>)
 
@@ -21,7 +28,7 @@ enum class StateValue(val value: Int) {
 /**
  * Based on this: https://swtch.com/~rsc/regexp/nfa.c.txt
  */
-class RegularExpression(val regularExpression: String, val inputString: String) {
+class RegularExpression(regularExpression: String, private val inputString: String) {
 
     private var listId = 0
 
@@ -31,12 +38,86 @@ class RegularExpression(val regularExpression: String, val inputString: String) 
     val postFixNotation: String = regularExpressionToPostfixNotation(regularExpression)
     private val start: State
 
+
     val actionSequence = mutableListOf<RegExpAction>()
 
+    private val logger = KotlinLogging.logger {}
 
     private interface WrappedStack {
+
         fun addFragment(fragment: Frag)
         fun popFragment(): Frag
+
+
+    }
+
+    private interface WrappedDatastructures {
+        fun addCList(state: State)
+
+        fun addNList(state: State)
+
+        fun switchLists()
+
+
+        fun isMatch(): Boolean
+
+        fun clearNList()
+        fun populateNList(characterCode: Int)
+    }
+
+    private val wrappedDatastructures = object : WrappedDatastructures {
+        private var clist = mutableListOf<State>()
+        private var nlist = mutableListOf<State>()
+
+
+        override fun addCList(state: State) {
+            logger.info { "Adding state to clist: ${state.c}" }
+            clist.add(state)
+        }
+
+        override fun addNList(state: State) {
+            nlist.add(state)
+        }
+
+        override fun switchLists() {
+            val temp = clist
+            clist = nlist
+            nlist = temp
+        }
+
+        override fun isMatch(): Boolean {
+            return clist.firstOrNull { it.c == StateValue.Match.value } != null
+        }
+
+        override fun clearNList() {
+            nlist.clear()
+        }
+
+        override fun populateNList(characterCode: Int) {
+            clist.forEach { state ->
+                if (state.c == characterCode) {
+                    addState({ stateToAdd ->
+                        getWrappedStack().addNList(stateToAdd)
+                    }, state.out)
+                }
+            }
+        }
+    }
+
+
+    private val wrappedStack = object : WrappedStack {
+        val stack = mutableListOf<Frag>()
+
+        override fun addFragment(fragment: Frag) {
+            stack.add(fragment)
+            actionSequence.add(StackAdd(fragment))
+        }
+
+        override fun popFragment(): Frag {
+            return stack.removeLast().also {
+                actionSequence.add(StackRemove(it))
+            }
+        }
     }
 
 
@@ -44,28 +125,17 @@ class RegularExpression(val regularExpression: String, val inputString: String) 
         start = postfixToNfa(postFixNotation)
     }
 
-    private fun getWrappedStack(): WrappedStack {
-        return object : WrappedStack {
-            val stack = mutableListOf<Frag>()
+    private fun getStack(): WrappedStack {
+        return wrappedStack
+    }
 
-            override fun addFragment(fragment: Frag) {
-                stack.add(fragment)
-                actionSequence.add(StackAdd(fragment))
-            }
-
-            override fun popFragment(): Frag {
-                return stack.removeLast().also {
-                    actionSequence.add(StackRemove(it))
-                }
-            }
-
-        }
-
+    private fun getWrappedStack(): WrappedDatastructures {
+        return wrappedDatastructures
     }
 
 
     fun postfixToNfa(postfix: String): State {
-        val stack = getWrappedStack()
+        val stack = getStack()
 
         for (character in postfix) {
             actionSequence.add(HandleCharacterInPostfixNotation(character))
@@ -144,51 +214,40 @@ class RegularExpression(val regularExpression: String, val inputString: String) 
         }
     }
 
+
     fun match(state: State, inputData: String): Boolean {
-        var clist = mutableListOf<State>()
         listId++
-        addState(clist, state)
-        var nlist = mutableListOf<State>()
+        addState({ state ->
+            getWrappedStack().addCList(state)
+        }, state)
 
         for (character in inputData) {
-            step(clist, character.code, nlist)
-            val temp = clist
-            clist = nlist
-            nlist = temp
+            step(character.code)
+            getWrappedStack().switchLists()
         }
-        return isMatch(clist)
+        return getWrappedStack().isMatch()
     }
 
-    private fun isMatch(clist: List<State>) = clist.firstOrNull { it.c == StateValue.Match.value } != null
 
-    private fun addState(clist: MutableList<State>, state: State?) {
+    private fun addState(addFunction: (state: State) -> Unit, state: State?) {
         if (state == null || state.lastList == listId) {
             return
         }
 
         state.lastList = listId
         if (state.c == StateValue.Split.value) {
-            addState(clist, state.out)
-            addState(clist, state.out1)
+            addState(addFunction, state.out)
+            addState(addFunction, state.out1)
             return
         }
 
-        clist.add(state)
+        addFunction(state)
     }
 
-    private fun step(
-        clist: List<State>,
-        characterCode: Int,
-        nlist: MutableList<State>
-    ) {
+    private fun step(characterCode: Int) {
         listId++
-        nlist.clear()
-
-        clist.forEach { state ->
-            if (state.c == characterCode) {
-                addState(nlist, state.out)
-            }
-        }
+        getWrappedStack().clearNList()
+        getWrappedStack().populateNList(characterCode)
     }
 
 

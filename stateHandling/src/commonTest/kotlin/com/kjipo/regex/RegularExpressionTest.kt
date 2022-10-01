@@ -16,13 +16,15 @@ class RegularExpressionTest {
 
     @Test
     fun testRegularExpression2() {
+        assertTrue { doRegExpMatch("a", "a") }
         assertTrue { doRegExpMatch("a+", "a") }
 
         assertFalse { doRegExpMatch("a+", "b") }
     }
 
-    private fun doRegExpMatch(regularExpression: String, inputString: String) =
-        RegularExpression("a+", "a").doMatch()
+    private fun doRegExpMatch(regularExpression: String, inputString: String): Boolean {
+        return RegularExpression(regularExpression, inputString).doMatch()
+    }
 
 
 }

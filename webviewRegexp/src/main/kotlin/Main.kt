@@ -8,11 +8,13 @@ val logger = KotlinLogging.logger {}
 fun main() {
     KotlinLoggingConfiguration.LOG_LEVEL = KotlinLoggingLevel.DEBUG
 
-    val regularExpression = RegularExpression()
-    val result = regularExpression.doMatch("a+", "a")
+    val regularExpression = RegularExpression("a+", "a")
+    val result = regularExpression.doMatch()
 //    println("Result: ${result}")
 
     CharacterSequence("Test", "regexp_visualization")
+    CharacterSequence(regularExpression.postFixNotation, "postfix_visualization")
+
 
     val stackVisualization = StackVisualization(regularExpression.actionSequence, "stack_visualization")
     stackVisualization.runActionScript()
