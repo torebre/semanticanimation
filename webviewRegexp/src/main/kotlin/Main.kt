@@ -15,6 +15,10 @@ fun main() {
     CharacterSequence("Test", "regexp_visualization")
     CharacterSequence(regularExpression.postFixNotation, "postfix_visualization")
 
+    logger.info { "Action sequence:" }
+    regularExpression.actionSequence.forEach {
+        logger.info { it }
+    }
 
     val stackVisualization = StackVisualization(regularExpression.actionSequence, "stack_visualization")
     stackVisualization.runActionScript()

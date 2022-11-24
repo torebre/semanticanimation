@@ -1,6 +1,11 @@
 package com.kjipo.regex
 
-sealed class RegExpAction
+sealed class RegExpAction {
+
+    override fun toString(): String {
+        return this::class.simpleName ?: "none"
+    }
+}
 
 class StackAdd(val fragment: Frag) : RegExpAction()
 
