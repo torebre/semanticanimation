@@ -55,8 +55,6 @@ class StackVisualization(private val actionScript: List<RegExpAction>, parentEle
                     stackElements.add(StackElement(stackElement, textElement))
 
                     moveStackElementsDown()
-
-
                 }
 
                 is StackRemove -> {

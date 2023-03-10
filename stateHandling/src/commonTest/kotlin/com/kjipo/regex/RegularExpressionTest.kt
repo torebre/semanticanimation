@@ -22,9 +22,4 @@ class RegularExpressionTest {
         assertFalse { doRegExpMatch("a+", "b") }
     }
 
-    private fun doRegExpMatch(regularExpression: String, inputString: String): Boolean {
-        return RegularExpression(regularExpression, inputString).doMatch()
-    }
-
-
 }

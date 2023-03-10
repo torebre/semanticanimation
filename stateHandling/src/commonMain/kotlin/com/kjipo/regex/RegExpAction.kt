@@ -7,8 +7,27 @@ sealed class RegExpAction {
     }
 }
 
-class StackAdd(val fragment: Frag) : RegExpAction()
+class StackAdd(val fragment: Frag) : RegExpAction() {
 
-class StackRemove(val fragment: Frag): RegExpAction()
+    override fun toString(): String {
+        return "StackAdd: $fragment"
+    }
 
-class HandleCharacterInPostfixNotation(val character: Char): RegExpAction()
+}
+
+class StackRemove(val fragment: Frag): RegExpAction() {
+
+    override fun toString(): String {
+        return "StackRemove: $fragment"
+    }
+
+}
+
+class HandleCharacterInPostfixNotation(val character: Char): RegExpAction() {
+
+    override fun toString(): String {
+        return "HandleCharacterInPostfixNotation: $character"
+    }
+
+
+}

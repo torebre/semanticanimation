@@ -5,18 +5,40 @@ import mu.KotlinLogging
 data class Paren(val nalt: Int, val natom: Int)
 
 
-class StateHolder(var state: State, val isOut: Boolean)
+class StateHolder(var state: State, val isOut: Boolean) {
+
+
+    override fun toString(): String {
+        return "State: $state. Is out: $isOut"
+    }
+
+
+}
 
 data class State(
     var c: Int, var out: State? = null,
     var out1: State? = null, var lastList: Int = 0
 ) {
+
+    val id: Int = idCounter++
+
     override fun toString(): String {
         return "State(c=$c, out=${out?.c}, out1=${out1?.c}, lastList=$lastList)"
     }
+
+    companion object {
+        private var idCounter = 0
+    }
 }
 
-data class Frag(val start: State, val out: MutableList<StateHolder>)
+data class Frag(val start: State, val out: MutableList<StateHolder>) {
+
+
+    override fun toString(): String {
+        return "Start: ${start.c}. Out: $out"
+    }
+
+}
 
 enum class StateValue(val value: Int) {
     Match(256),
