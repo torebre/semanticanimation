@@ -22,4 +22,12 @@ class RegularExpressionTest {
         assertFalse { doRegExpMatch("a+", "b") }
     }
 
+    @Test
+    fun testOrInRegularExpression() {
+        assertTrue { doRegExpMatch("a|b", "a") }
+        assertTrue { doRegExpMatch("a|b|c", "c") }
+        assertTrue { doRegExpMatch("a|b.*", "adefghijklmnop") }
+
+        assertFalse { doRegExpMatch("a|b", "cdefghijklm") }
+    }
 }

@@ -39,7 +39,7 @@ class RegularExpressionActionSequenceTest {
         while(statesToExamine.isNotEmpty()) {
             val state = statesToExamine.removeFirst()
 
-            println("State: ${state.id}")
+            println("State: $state")
 
             handleOutState(state.out, seenStates, state, statesToExamine)
             handleOutState(state.out1, seenStates, state, statesToExamine)
@@ -63,7 +63,7 @@ class RegularExpressionActionSequenceTest {
                 statesToExamine.add(state)
                 seenStates.add(state)
             }
-            println("Out: ${out.id}")
+            println("Out: $out")
         }
     }
 

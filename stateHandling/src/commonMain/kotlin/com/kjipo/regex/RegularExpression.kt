@@ -15,6 +15,24 @@ class StateHolder(var state: State, val isOut: Boolean) {
 
 }
 
+
+private fun getCharacterValue(c: Int): String {
+    return when(c) {
+        StateValue.Split.value -> {
+            "Split"
+        }
+
+        StateValue.Match.value -> {
+            "Match"
+        }
+
+        else -> {
+            Char(c).toString()
+        }
+    }
+}
+
+
 data class State(
     var c: Int, var out: State? = null,
     var out1: State? = null, var lastList: Int = 0
@@ -23,7 +41,7 @@ data class State(
     val id: Int = idCounter++
 
     override fun toString(): String {
-        return "State(c=$c, out=${out?.c}, out1=${out1?.c}, lastList=$lastList)"
+        return "State(id=$id, characterValue=${getCharacterValue(c)}, out=${out?.c}, out1=${out1?.c}, lastList=$lastList)"
     }
 
     companion object {
@@ -239,8 +257,8 @@ class RegularExpression(regularExpression: String, private val inputString: Stri
 
     fun match(state: State, inputData: String): Boolean {
         listId++
-        addState({ state ->
-            getWrappedStack().addCList(state)
+        addState({ stateToAdd ->
+            getWrappedStack().addCList(stateToAdd)
         }, state)
 
         for (character in inputData) {
